@@ -252,8 +252,19 @@ def create_app(test_config=None):
 
     # if len(question_bank) == len(previous_questions):
     #   abort(404) # consumed all questions
+    for q in previous_questions:
+      for b in question_bank:
+        if b.id == q:
+          question_bank.remove(b)
     
-    new_question = question_bank[random.randint(0, len(question_bank)-1)]
+    
+    if question_bank:
+      new_question = question_bank[random.randint(0, len(question_bank)-1)]
+    else:
+      abort(404)
+
+
+
     while new_question.id in previous_questions:
       new_question = question_bank[random.randint(0, len(question_bank)-1)]
 
